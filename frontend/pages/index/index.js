@@ -7,6 +7,22 @@ Component({
     inputedValue: "",
   },
 
+  lifetimes: {
+    // 生命周期函数
+    // 在组件实例进入页面节点树时执行
+    attached() {
+      // 从缓存中读取items
+      wx.getStorage({
+        key: 'items',
+        success: res => {
+          this.setData({
+            items: res.data.filter(v=>v.checked===false)
+          })
+        },
+      })
+    },
+  },
+
   methods: {
     // 监听键盘输入事件
     // 并更新数据
@@ -24,7 +40,7 @@ Component({
       if (items[0] !== undefined) {
         newID = items[0].id + 1;
       }
-      
+
       // 将新条目更新到items中
       // 并将输入框的值清空
       items.unshift({
@@ -35,6 +51,12 @@ Component({
       this.setData({
         items: items,
         inputedValue: "",
+      })
+
+      // 将items本地存储
+      wx.setStorage({
+        key: "items",
+        data: items,
       })
     },
     // 监听多选框的状态改变事件
@@ -63,8 +85,11 @@ Component({
         items
       })
 
-      // 打印的内容会展现在调试器中
-      console.log(this.data.items)
+      // 将items本地存储
+      wx.setStorage({
+        key: "items",
+        data: items,
+      })
     }
   },
 })
