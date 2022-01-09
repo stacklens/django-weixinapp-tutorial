@@ -1,4 +1,5 @@
 Component({
+  // 页面持有的数据
   data: {
     items: [{
         id: 3,
@@ -16,6 +17,7 @@ Component({
   },
 
   methods: {
+    // 监听多选框的状态改变事件
     checkboxChange(e) {
       // 页面持有的数据
       const items = this.data.items
@@ -34,12 +36,12 @@ Component({
           }
         }
       }
-  
+
       // 更新数据
       this.setData({
         items
       })
-  
+
       // 打印的内容会展现在调试器中
       console.log(this.data.items)
     }
