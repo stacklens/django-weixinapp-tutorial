@@ -1,0 +1,11 @@
+.list-input {
+  padding-top: 30rpx;
+  padding-bottom: 50rpx;
+}
+
+.line {
+  width: 100%;
+  height: 3rpx;
+  background: #ddd;
+  margin-bottom: 20rpx;
+}

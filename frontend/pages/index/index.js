@@ -1,25 +1,46 @@
 Component({
   // 页面持有的数据
   data: {
-    items: [{
-        id: 3,
-        content: '和丢丢去超市买白菜'
-      },
-      {
-        id: 2,
-        content: '周二和老王吃烧烤'
-      },
-      {
-        id: 1,
-        content: '凌晨给老板汇报工作'
-      }
-    ]
+    // todo-list数据
+    items: [],
+    // 输入框当前内容
+    inputedValue: "",
   },
 
   methods: {
+    // 监听键盘输入事件
+    // 并更新数据
+    keyInput(e) {
+      this.setData({
+        inputedValue: e.detail.value
+      })
+    },
+    // 监听提交按钮
+    inputSubmit() {
+      let items = this.data.items
+
+      // 设置新条目的id
+      let newID = 1;
+      if (items[0] !== undefined) {
+        newID = items[0].id + 1;
+      }
+      
+      // 将新条目更新到items中
+      // 并将输入框的值清空
+      items.unshift({
+        id: newID,
+        content: this.data.inputedValue,
+        checked: false,
+      });
+      this.setData({
+        items: items,
+        inputedValue: "",
+      })
+    },
     // 监听多选框的状态改变事件
     checkboxChange(e) {
       // 页面持有的数据
+      // 注意获取本地数据的写法为 this.data.xxx
       const items = this.data.items
       // checkbox持有的数据
       const values = e.detail.value

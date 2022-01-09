@@ -1,4 +1,14 @@
 <view class="container">
+  <view class="list-input">
+    <view class="weui-cell weui-cell_input">
+      <input bind:input="keyInput" value="{{inputedValue}}" class="weui-input" maxlength="50" placeholder="请输入待办事项" />
+    </view>
+
+    <view class="line"></view>
+
+    <button bind:tap="inputSubmit" class="weui-btn" type="default" style="color: gray;">提交</button>
+  </view>
+
   <view class="weui-cells weui-cells_after-title">
     <checkbox-group bind:change="checkboxChange">
       <label class="weui-cell weui-check__label" wx:for="{{items}}" wx:key="id">
