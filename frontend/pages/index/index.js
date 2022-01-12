@@ -16,9 +16,17 @@ Component({
         key: 'items',
         success: res => {
           this.setData({
-            items: res.data.filter(v=>v.checked===false)
+            items: res.data.filter(v => v.checked === false)
           })
         },
+      })
+
+
+      wx.request({
+        url: 'http://127.0.0.1:8000/api/weixin/login/',
+        success(res) {
+          console.log(res.data)
+        }
       })
     },
   },
