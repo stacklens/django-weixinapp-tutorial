@@ -12,31 +12,31 @@ Component({
     // 在组件实例进入页面节点树时执行
     attached() {
       // 从缓存中读取items
-      wx.getStorage({
-        key: 'items',
-        success: res => {
-          this.setData({
-            items: res.data.filter(v => v.checked === false)
-          })
-        },
-      })
-
-      // wx.login({
-      //   success(res) {
-      //     if (res.code) {
-      //       //发起网络请求
-      //       wx.request({
-      //         url: 'http://127.0.0.1:8000/api/weixin/login/',
-      //         method: 'POST',
-      //         data: {
-      //           code: res.code
-      //         }
-      //       })
-      //     } else {
-      //       console.log('登录失败！' + res.errMsg)
-      //     }
-      //   }
+      // wx.getStorage({
+      //   key: 'items',
+      //   success: res => {
+      //     this.setData({
+      //       items: res.data.filter(v => v.checked === false)
+      //     })
+      //   },
       // })
+
+      wx.login({
+        success(res) {
+          if (res.code) {
+            //发起网络请求
+            wx.request({
+              url: 'http://127.0.0.1:8000/api/weixin/login/',
+              method: 'POST',
+              data: {
+                code: res.code
+              }
+            })
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
+        }
+      })
     },
   },
 
