@@ -21,13 +21,22 @@ Component({
         },
       })
 
-
-      wx.request({
-        url: 'http://127.0.0.1:8000/api/weixin/login/',
-        success(res) {
-          console.log(res.data)
-        }
-      })
+      // wx.login({
+      //   success(res) {
+      //     if (res.code) {
+      //       //发起网络请求
+      //       wx.request({
+      //         url: 'http://127.0.0.1:8000/api/weixin/login/',
+      //         method: 'POST',
+      //         data: {
+      //           code: res.code
+      //         }
+      //       })
+      //     } else {
+      //       console.log('登录失败！' + res.errMsg)
+      //     }
+      //   }
+      // })
     },
   },
 
