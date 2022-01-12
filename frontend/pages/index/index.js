@@ -8,28 +8,61 @@ Component({
   },
 
   lifetimes: {
-    // 生命周期函数
-    // 在组件实例进入页面节点树时执行
     attached() {
-      // 从缓存中读取items
-      // wx.getStorage({
-      //   key: 'items',
-      //   success: res => {
-      //     this.setData({
-      //       items: res.data.filter(v => v.checked === false)
-      //     })
-      //   },
-      // })
+
+      try {
+        var value = wx.getStorageSync('access_date')
+        console.log(value)
+        if (value) {
+          // Do something with return value
+        }
+      } catch (e) {
+        // Do something when catch error
+        console.log(e)
+      }
+
+      // --------------
+      // 步骤一：获取code
+      // --------------
 
       wx.login({
         success(res) {
           if (res.code) {
-            //发起网络请求
+
+            // --------------
+            // 步骤二：用code换取token
+            // --------------
+
             wx.request({
               url: 'http://127.0.0.1:8000/api/weixin/login/',
               method: 'POST',
               data: {
                 code: res.code
+              },
+              success: res => {
+                // 在小程序调试器中查看是否收到token
+                console.log(res)
+                const access = res.data.access
+                // 将token保存到缓存
+                wx.setStorage({
+                  key: "access",
+                  data: access
+                })
+
+                // --------------
+                // 步骤三：用token获取用户数据
+                // --------------
+
+                wx.request({
+                  url: 'http://127.0.0.1:8000/api/weixin/data/',
+                  header: {
+                    'Authorization': 'Bearer ' + access
+                  },
+                  success: res => {
+                    // 在小程序调试器中查看返回值是否正确
+                    console.log(res)
+                  }
+                })
               }
             })
           } else {

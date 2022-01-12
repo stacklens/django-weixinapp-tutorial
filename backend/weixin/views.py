@@ -6,7 +6,18 @@ import json
 
 from django.contrib.auth.models import User
 
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.permissions import IsAuthenticated
 
+
+# 获取用户数据
+class UserData(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        return Response({'code': 'Authenticated.'})
+
+# 微信登录
 class WeixinLogin(APIView):
     def post(self, request, format=None):
         """
@@ -52,4 +63,10 @@ class WeixinLogin(APIView):
                     password=openid
                 )
 
-            return Response({'code': 'success'})
+            refresh = RefreshToken.for_user(user)
+
+            return Response({
+                    'code': 'success',
+                    'refresh': str(refresh),
+                    'access': str(refresh.access_token)
+                })
