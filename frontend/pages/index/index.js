@@ -9,7 +9,21 @@ Component({
 
   lifetimes: {
     attached() {
-      this.login()
+      this.login(() => {
+        const access = wx.getStorageSync('access')
+        // 从django后端获取数据
+        wx.request({
+          url: 'http://127.0.0.1:8000/api/weixin/data/',
+          header: {
+            'Authorization': 'Bearer ' + access
+          },
+          success: res => {
+            this.setData({
+              items: res.data.items.filter(v => v.checked === false)
+            })
+          }
+        })
+      })
     },
   },
 
@@ -94,6 +108,20 @@ Component({
         inputedValue: e.detail.value
       })
     },
+    // 将清单数据提交到django
+    uploadData(items) {
+      const access = wx.getStorageSync('access')
+      wx.request({
+        url: 'http://127.0.0.1:8000/api/weixin/data/',
+        method: 'POST',
+        header: {
+          'Authorization': 'Bearer ' + access
+        },
+        data: {
+          items: items
+        }
+      })
+    },
     // 先登录再提交
     inputSubmit() {
       this.login(() => {
@@ -122,11 +150,8 @@ Component({
         inputedValue: "",
       })
 
-      // 将items本地存储
-      wx.setStorage({
-        key: "items",
-        data: items,
-      })
+      // 将items提交到django
+      this.uploadData(items)
     },
     checkboxChange(e) {
       this.login(() => {
@@ -159,11 +184,8 @@ Component({
         items
       })
 
-      // 将items本地存储
-      wx.setStorage({
-        key: "items",
-        data: items,
-      })
+      // 将items提交到django
+      this.uploadData(items)
     }
   },
 })

@@ -15,7 +15,15 @@ class UserData(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, format=None):
-        return Response({'code': 'Authenticated.'})
+        print('Get data: ', request.user.profile.items)
+        return Response({'code': 'get ok', 'items': request.user.profile.items['items']})
+
+    def post(self, request, format=None):
+        user = request.user
+        user.profile.items = request.data
+        user.save()
+        print('Post data: ', user.profile.items)
+        return Response({'code': 'post ok'})
 
 # 微信登录
 class WeixinLogin(APIView):
