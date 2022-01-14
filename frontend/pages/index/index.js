@@ -9,30 +9,30 @@ Component({
 
   lifetimes: {
     attached() {
+      this.login()
+    },
+  },
 
-      try {
-        var value = wx.getStorageSync('access_date')
-        console.log(value)
-        if (value) {
-          // Do something with return value
-        }
-      } catch (e) {
-        // Do something when catch error
-        console.log(e)
+  methods: {
+    login(callback = (() => {})) {
+      if (!this.isTokenAvailable()) {
+        console.log('Get Token from dj.')
+        this.getToken(callback)
+      } else {
+        console.log('Get Token from storage.')
+        callback()
       }
-
+    },
+    getToken(callback) {
       // --------------
       // 步骤一：获取code
       // --------------
-
       wx.login({
         success(res) {
           if (res.code) {
-
             // --------------
             // 步骤二：用code换取token
             // --------------
-
             wx.request({
               url: 'http://127.0.0.1:8000/api/weixin/login/',
               method: 'POST',
@@ -40,27 +40,28 @@ Component({
                 code: res.code
               },
               success: res => {
-                // 在小程序调试器中查看是否收到token
-                console.log(res)
                 const access = res.data.access
                 // 将token保存到缓存
                 wx.setStorage({
                   key: "access",
                   data: access
                 })
-
+                // 保存token的获取时间
+                wx.setStorage({
+                  key: "access_time",
+                  data: Date.parse(new Date())
+                })
                 // --------------
                 // 步骤三：用token获取用户数据
                 // --------------
-
                 wx.request({
                   url: 'http://127.0.0.1:8000/api/weixin/data/',
                   header: {
                     'Authorization': 'Bearer ' + access
                   },
                   success: res => {
-                    // 在小程序调试器中查看返回值是否正确
-                    console.log(res)
+                    // 调用回调函数
+                    callback()
                   }
                 })
               }
@@ -71,9 +72,19 @@ Component({
         }
       })
     },
-  },
-
-  methods: {
+    // 返回布尔值，检查token是否过期
+    isTokenAvailable() {
+      const now = Date.parse(new Date());
+      try {
+        const accessTime = wx.getStorageSync('access_time')
+        if ((accessTime !== '') && (now - accessTime < 5 * 60 * 1000)) {
+          return true
+        }
+      } catch {
+        // do something...
+      }
+      return false
+    },
     // 监听键盘输入事件
     // 并更新数据
     keyInput(e) {
@@ -81,8 +92,14 @@ Component({
         inputedValue: e.detail.value
       })
     },
-    // 监听提交按钮
+    // 先登录再提交
     inputSubmit() {
+      this.login(() => {
+        this._inputSubmit()
+      })
+    },
+    // 监听提交按钮
+    _inputSubmit() {
       let items = this.data.items
 
       // 设置新条目的id
