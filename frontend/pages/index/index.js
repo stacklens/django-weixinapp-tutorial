@@ -40,6 +40,7 @@ Component({
                 code: res.code
               },
               success: res => {
+                console.log(res)
                 const access = res.data.access
                 // 将token保存到缓存
                 wx.setStorage({
@@ -60,6 +61,7 @@ Component({
                     'Authorization': 'Bearer ' + access
                   },
                   success: res => {
+                    console.log(res)
                     // 调用回调函数
                     callback()
                   }
@@ -126,8 +128,13 @@ Component({
         data: items,
       })
     },
-    // 监听多选框的状态改变事件
     checkboxChange(e) {
+      this.login(() => {
+        this._checkboxChange(e)
+      })
+    },
+    // 监听多选框的状态改变事件
+    _checkboxChange(e) {
       // 页面持有的数据
       // 注意获取本地数据的写法为 this.data.xxx
       const items = this.data.items
