@@ -21,10 +21,11 @@
 - 全中文、全免费
 - 代码全开源
 
-你可以根据自己的喜好，选择以下两种阅读途径：
+你可以根据自己的喜好，选择以下阅读途径：
 
 - [Github版](https://github.com/stacklens/django-weixinapp-tutorial/tree/master/md)
 - [博客版](https://www.dusaiphoto.com/article/167/)
+- [微信公众号版](https://github.com/stacklens/django-weixinapp-tutorial/blob/master/resources/QRwexin.jpg)
 
 内容是相同的。
 
