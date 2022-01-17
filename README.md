@@ -21,6 +21,13 @@
 - 全中文、全免费
 - 代码全开源
 
+你可以根据自己的喜好，选择以下两种阅读途径：
+
+- [Github版](https://github.com/stacklens/django-weixinapp-tutorial/tree/master/md)
+- [博客版](https://www.dusaiphoto.com/article/167/)
+
+内容是相同的。
+
 ## 开发环境
 
 教程用到的环境如下：
