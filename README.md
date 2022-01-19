@@ -61,9 +61,11 @@
 
 本教程的代码托管在 Github：[django-weixinapp-tutorial](https://github.com/stacklens/django-weixinapp-tutorial)
 
+代码包含两个分支，默认的 master 分支为<Django+小程序>Web版，local 分支为<小程序>本地版。
+
 读者可将代码克隆到本地作为学习过程的参照，也感谢你顺手给一个 Star。
 
-在起步阶段，微信小程序和 Vue 非常的相似。鉴于 Vue 的文档写得非常通俗易懂，因此非常推荐通过 [Vue官方文档](https://cn.vuejs.org/index.html) 来学习小程序开发。
+在起步阶段，微信小程序和 Vue 非常的相似。鉴于 Vue 的文档写得通俗易懂，因此非常推荐通过 [Vue官方文档](https://cn.vuejs.org/index.html) 来学习小程序开发。（曲线救国）
 
 笔者写过几个广受好评（划掉）的 Django 教程，比如 [Django搭建博客](https://www.dusaiphoto.com/article/2/) 和 [Django-Vue搭建博客](https://www.dusaiphoto.com/article/103/)，可供读者朋友参考。
 
