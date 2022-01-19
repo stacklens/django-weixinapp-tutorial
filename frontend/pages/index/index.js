@@ -162,7 +162,7 @@ Component({
     _checkboxChange(e) {
       // 页面持有的数据
       // 注意获取本地数据的写法为 this.data.xxx
-      const items = this.data.items
+      const items = JSON.parse(JSON.stringify(this.data.items))
       // checkbox持有的数据
       const values = e.detail.value
       // 将items和values进行对比
@@ -181,7 +181,7 @@ Component({
 
       // 更新数据
       this.setData({
-        items
+        items: items
       })
 
       // 将items提交到django
