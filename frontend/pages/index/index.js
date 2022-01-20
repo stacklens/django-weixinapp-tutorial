@@ -130,7 +130,7 @@ Component({
     },
     // 监听提交按钮
     _inputSubmit() {
-      let items = this.data.items
+      let items = JSON.parse(JSON.stringify(this.data.items))
 
       // 设置新条目的id
       let newID = 1;
