@@ -1,19 +1,25 @@
 // app.js
 App({
   onLaunch() {
-    // 展示本地存储能力
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
+    this.initcloud()
+    this.globalData = {
+      // 用于存储待办记录的集合名称
+      collection: 'todo',
+    }
   },
-  globalData: {
-    userInfo: null
-  }
+  // 初始化云开发环境
+  initcloud() {
+    wx.cloud.init({
+      traceUser: true,
+      env: "test-8gtd9aw9fdc83f55"
+    })
+    // 装载云函数操作对象返回方法
+    this.cloud = () => {
+      return wx.cloud // 直接返回 wx.cloud
+    }
+  },
+  // 获取云数据库实例
+  async database() {
+    return (await this.cloud()).database()
+  },
 })
