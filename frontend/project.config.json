@@ -51,5 +51,6 @@
   "editorSetting": {
     "tabIndent": "insertSpaces",
     "tabSize": 2
-  }
+  },
+  "cloudfunctionRoot": "cloudfunctions/"
 }

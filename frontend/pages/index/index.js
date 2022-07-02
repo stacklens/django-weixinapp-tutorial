@@ -11,6 +11,16 @@ Component({
     // -----
     // 以下lifetimes为云开发后端版本的
     // -----
+    async attached() {
+      getApp().cloud().callFunction({
+        name: 'getList',
+        complete: res => {
+          this.setData({
+            items: res.result.data
+          })
+        }
+      })
+    },
 
     // -----
     // 以下lifetimes为Django后端版本的
@@ -40,8 +50,14 @@ Component({
     // 以下methods为云开发后端版本
     // -----
 
+    // 更新待办的完成状态
+    checkboxChange(e) {
+      console.log(e)
+
+    },
+
     // 生成一个uuid
-    getUUID(randomLength = 8) {
+    getUUID(randomLength = 16) {
       return Number(Math.random().toString().substr(2, randomLength) + Date.now()).toString(36)
     },
     // 监听输入框按键
