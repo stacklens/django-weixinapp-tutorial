@@ -11,7 +11,7 @@ Component({
     // -----
     // 以下lifetimes为云开发后端版本的
     // -----
-    async attached() {
+    attached() {
       getApp().cloud().callFunction({
         name: 'getList',
         complete: res => {
