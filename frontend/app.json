@@ -6,7 +6,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#6495ED",
-    "navigationBarTitleText": "Todo-List",
+    "navigationBarTitleText": "杜赛的待办",
     "navigationBarTextStyle": "black"
   },
   "style": "v2",
