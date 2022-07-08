@@ -93,6 +93,7 @@ Component({
         id: newID,
         content: this.data.inputedValue,
         checked: false,
+        pushed: false
       }
       // 将新条目更新到items中
       // 并将输入框的值清空
@@ -104,6 +105,37 @@ Component({
       })
       // 将items提交到云数据库
       this.uploadData(newItem)
+      // 订阅服务
+      this.subscribe()
+    },
+
+    // 向用户申请推送服务
+    subscribe() {
+      const templateId = 'FHKU0ktBmRAZ37iW-faAMxszRjVDFY2mvIzgH_VEerY'
+      // 仅展示了主流程
+      // 正式环境中，需考虑到用户可能会点击‘拒绝’、‘永久拒绝’等情况
+      // 并弹出对应的反馈，如弹窗等
+      wx.requestSubscribeMessage({
+        tmplIds: [templateId],
+        success (res) {
+          console.log('订阅成功 ', res)
+        },
+        fail (err) {
+          console.log('订阅失败 ', err)
+        }
+      })
+    },
+
+    test(){
+      getApp().cloud().callFunction({
+        name: 'pushNotify',
+        complete: res => {
+          console.log("success", res)
+        },
+        fail: res => {
+          console.log("fail", res)
+        }
+      })
     },
 
     async uploadData(item) {
