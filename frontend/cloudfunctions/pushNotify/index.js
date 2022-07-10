@@ -29,7 +29,7 @@ exports.main = async (event, context) => {
         lang: 'zh_CN',
         // 订阅消息模板ID
         // 替换为你的模板id!
-        templateId: 'FHKU0ktBmRAZ37iW-faAMxszRjVDFY2mvIzgH_VEerY',
+        templateId: 'FHKU0...xxx...zgH_VEerY',
         // 跳转小程序类型：developer为开发版；trial为体验版；formal为正式版；默认为正式版
         // 正式版删除此行
         miniprogramState: 'developer',

@@ -107,46 +107,38 @@ Component({
       this.uploadData(newItem)
       // 订阅服务
       this.subscribe()
+      // 发送邮件服务
+      getApp().cloud().callFunction({
+        name: 'sendEmail',
+        data: {
+          content: newItem.content
+        },
+      })
     },
 
     // 向用户申请推送服务
     subscribe() {
-      const templateId = 'FHKU0ktBmRAZ37iW-faAMxszRjVDFY2mvIzgH_VEerY'
+      // 填你的模板id
+      const templateId = 'FHKU0ktB..xxx.._VEerY'
       // 仅展示了主流程
       // 正式环境中，需考虑到用户可能会点击‘拒绝’、‘永久拒绝’等情况
       // 并弹出对应的反馈，如弹窗等
       wx.requestSubscribeMessage({
         tmplIds: [templateId],
-        success (res) {
+        success(res) {
           console.log('订阅成功 ', res)
         },
-        fail (err) {
+        fail(err) {
           console.log('订阅失败 ', err)
         }
       })
     },
-
-    test(){
-      getApp().cloud().callFunction({
-        name: 'pushNotify',
-        complete: res => {
-          console.log("success", res)
-        },
-        fail: res => {
-          console.log("fail", res)
-        }
-      })
-    },
-
     async uploadData(item) {
       const db = await getApp().database()
       db.collection('todo').add({
         data: item
       })
     },
-
-
-
 
     // -----
     // 以下methods为Django后端版本的
